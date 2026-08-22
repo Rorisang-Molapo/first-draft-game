@@ -21,24 +21,32 @@ import java.io.IOException;
 
 
 public class HelloApplication extends Application {
+
+    private AudioClip clickSound;
+    private MediaPlayer bgMusicPlayer;
+
     @Override
     public void start(Stage stage) throws IOException {
 
-
-        try {
-            // Background Music Setup
-            String musicPath = getClass().getResource("/audio/KORDHELL - MURDER IN MY MIND.mp3").toExternalForm();
-            Media media = new Media(musicPath);
-            MediaPlayer bgMusicPlayer = new MediaPlayer(media);
-            bgMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Loop continuously
-            bgMusicPlayer.setVolume(0.5); // 50% volume
-            bgMusicPlayer.play();
-
-            // Click Sound Effect Setup
-            String soundPath = getClass().getResource("/audio/.wav").toExternalForm();
-            AudioClip clickSound = new AudioClip(soundPath);
+       //Background Music
+try {
+        String musicPath = getClass().getResource("/audio/KORDHELL - MURDER IN MY MIND.mp3").toExternalForm();
+        Media media = new Media(musicPath);
+        bgMusicPlayer = new MediaPlayer(media);
+        bgMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+        bgMusicPlayer.setVolume(0.3);
+        bgMusicPlayer.play();
         } catch (Exception e) {
-            System.err.println("Audio files not found or failed to load: " + e.getMessage());
+        System.err.println("Failed to load background music: " + e.getMessage());
+        }
+
+        // Click Sound Effect
+        try {
+        String soundPath = getClass().getResource("/audio/click.mp3").toExternalForm();
+        clickSound = new AudioClip(soundPath);
+        clickSound.setVolume(0.6);
+        } catch (Exception e) {
+        System.err.println("Failed to load sound effect: " + e.getMessage());
         }
 
         // custom font for title and buttons
@@ -97,7 +105,7 @@ public class HelloApplication extends Application {
         exitBtn.setStyle(defaultStyle);
         exitBtn.setOnMouseEntered(e -> exitBtn.setStyle(hoverStyle));
         exitBtn.setOnMouseExited(e -> exitBtn.setStyle(defaultStyle));
-        exitBtn.setOnAction(event -> stage.close());
+       exitBtn.setOnAction(event -> stage.close());
         exitBtn.setOnAction(event -> {
             javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.CONFIRMATION);
             alert.setTitle("Exit Game");
@@ -143,6 +151,25 @@ public class HelloApplication extends Application {
         settingsBtn.setPrefWidth(200);
         exitBtn.setPrefWidth(200);
 
+        playBtn.setOnAction(e -> {
+            playClickSound();
+
+        });
+
+        settingsBtn.setOnAction(e -> {
+            playClickSound();
+
+        });
+
+        instructionsBtn.setOnAction(e -> {
+            playClickSound();
+
+        });
+
+        exitBtn.setOnAction(e -> {
+            playClickSound();
+
+        });
 
 
 
@@ -154,12 +181,15 @@ public class HelloApplication extends Application {
         stage.show();
     }
 
+    private void playClickSound() {
+        if (clickSound != null) {
+            clickSound.play();
+        }
+    }
+
     public static void main(String[] args) {
         launch();
     }
 }
-
-
-
 
 

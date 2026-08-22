@@ -19,37 +19,42 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-
 public class HelloApplication extends Application {
 
     private AudioClip clickSound;
     private MediaPlayer bgMusicPlayer;
+    private boolean isMuted = false; // this boolean checks if audio is playing in all pages
 
+    // you created this because audio kept giving you problems in the sound page
+    // so this method runs once when application starts.
     @Override
-    public void start(Stage stage) throws IOException {
-
-       //Background Music
-try {
-        String musicPath = getClass().getResource("/audio/KORDHELL - MURDER IN MY MIND.mp3").toExternalForm();
-        Media media = new Media(musicPath);
-        bgMusicPlayer = new MediaPlayer(media);
-        bgMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-        bgMusicPlayer.setVolume(0.3);
-        bgMusicPlayer.play();
+    public void init() {
+        // Background Music
+        try {
+            String musicPath = getClass().getResource("/audio/KORDHELL - MURDER IN MY MIND.mp3").toExternalForm();
+            Media media = new Media(musicPath);
+            bgMusicPlayer = new MediaPlayer(media);
+            bgMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
+            bgMusicPlayer.setVolume(0.3);
+            bgMusicPlayer.play();
         } catch (Exception e) {
-        System.err.println("Failed to load background music: " + e.getMessage());
+            System.err.println("Failed to load background music: " + e.getMessage());
         }
 
         // Click Sound Effect
         try {
-        String soundPath = getClass().getResource("/audio/click.mp3").toExternalForm();
-        clickSound = new AudioClip(soundPath);
-        clickSound.setVolume(0.7);
+            String soundPath = getClass().getResource("/audio/click.mp3").toExternalForm();
+            clickSound = new AudioClip(soundPath);
+            clickSound.setVolume(0.7);
         } catch (Exception e) {
-        System.err.println("Failed to load sound effect: " + e.getMessage());
+            System.err.println("Failed to load sound effect: " + e.getMessage());
         }
+    }
 
-        // custom font for title and buttons
+    @Override
+    public void start(Stage stage) throws IOException {
+
+        // Custom font for title and buttons
         Font customFont = Font.loadFont(
                 getClass().getResource("/fonts-urban-jungle-font/Urbanjungledemo-ymAm.otf").toExternalForm(),
                 20
@@ -70,7 +75,7 @@ try {
             System.err.println("Background image not found.");
         }
 
-        //title logic
+        // Title logic
         Label titleLabel = new Label("Garena");
         titleLabel.setFont(Font.font(customFont.getFamily(), 70));
         titleLabel.setStyle("-fx-text-fill: #FF4500;");
@@ -83,7 +88,6 @@ try {
         Button instructionsBtn = new Button("Instructions");
         Button settingsBtn = new Button("Settings");
         Button exitBtn = new Button("Exit");
-
 
         String defaultStyle =
                 "-fx-background-color: rgba(255, 255, 255, 0.9); " +
@@ -118,7 +122,6 @@ try {
             }
         });
 
-
         settingsBtn.setStyle(defaultStyle);
         settingsBtn.setOnMouseEntered(e -> settingsBtn.setStyle(hoverStyle));
         settingsBtn.setOnMouseExited(e -> settingsBtn.setStyle(defaultStyle));
@@ -139,7 +142,6 @@ try {
         exitBtn.setLayoutX(360);
         exitBtn.setLayoutY(590);
 
-
         playBtn.setFont(customFont);
         instructionsBtn.setFont(customFont);
         settingsBtn.setFont(customFont);
@@ -150,29 +152,17 @@ try {
         settingsBtn.setPrefWidth(200);
         exitBtn.setPrefWidth(200);
 
-        playBtn.setOnAction(e -> {
-            playClickSound();
-
-        });
+        playBtn.setOnAction(e -> playClickSound());
 
         settingsBtn.setOnAction(e -> {
             playClickSound();
-
+            settings settingsView = new settings(stage, this);
+            stage.setScene(settingsView.getScene());
         });
 
-        instructionsBtn.setOnAction(e -> {
-            playClickSound();
+        instructionsBtn.setOnAction(e -> playClickSound());
 
-        });
-
-//        exitBtn.setOnAction(e -> {
-//            playClickSound();
-//
-//        });
-
-
-
-        Pane pan = new Pane(backgroundImage,titleLabel, playBtn,instructionsBtn,settingsBtn,exitBtn);
+        Pane pan = new Pane(backgroundImage, titleLabel, playBtn, instructionsBtn, settingsBtn, exitBtn);
         pan.setStyle("-fx-background-color:black");
         Scene scene = new Scene(pan, 900, 700);
         stage.setTitle("Welcome");
@@ -180,15 +170,26 @@ try {
         stage.show();
     }
 
-    private void playClickSound() {
+    // Helper methods
+    public void playClickSound() {
         if (clickSound != null) {
             clickSound.play();
         }
+    }
+
+    public MediaPlayer getBgMusicPlayer() {
+        return bgMusicPlayer;
+    }
+
+    public boolean isMuted() {
+        return isMuted;
+    }
+
+    public void setMuted(boolean muted) {
+        this.isMuted = muted;
     }
 
     public static void main(String[] args) {
         launch();
     }
 }
-
-

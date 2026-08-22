@@ -10,6 +10,9 @@ import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -21,6 +24,24 @@ public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
+
+        try {
+            // Background Music Setup
+            String musicPath = getClass().getResource("/audio/KORDHELL - MURDER IN MY MIND.mp3").toExternalForm();
+            Media media = new Media(musicPath);
+            MediaPlayer bgMusicPlayer = new MediaPlayer(media);
+            bgMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE); // Loop continuously
+            bgMusicPlayer.setVolume(0.5); // 50% volume
+            bgMusicPlayer.play();
+
+            // Click Sound Effect Setup
+            String soundPath = getClass().getResource("/audio/.wav").toExternalForm();
+            AudioClip clickSound = new AudioClip(soundPath);
+        } catch (Exception e) {
+            System.err.println("Audio files not found or failed to load: " + e.getMessage());
+        }
+
+        // custom font for title and buttons
         Font customFont = Font.loadFont(
                 getClass().getResource("/fonts-urban-jungle-font/Urbanjungledemo-ymAm.otf").toExternalForm(),
                 20

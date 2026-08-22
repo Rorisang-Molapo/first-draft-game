@@ -44,7 +44,7 @@ try {
         try {
         String soundPath = getClass().getResource("/audio/click.mp3").toExternalForm();
         clickSound = new AudioClip(soundPath);
-        clickSound.setVolume(0.6);
+        clickSound.setVolume(0.7);
         } catch (Exception e) {
         System.err.println("Failed to load sound effect: " + e.getMessage());
         }
@@ -105,9 +105,8 @@ try {
         exitBtn.setStyle(defaultStyle);
         exitBtn.setOnMouseEntered(e -> exitBtn.setStyle(hoverStyle));
         exitBtn.setOnMouseExited(e -> exitBtn.setStyle(defaultStyle));
-       exitBtn.setOnAction(event -> stage.close());
         exitBtn.setOnAction(event -> {
-            javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.CONFIRMATION);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Exit Game");
             alert.setHeaderText("Are you sure you want to exit?");
             alert.setContentText("Any unsaved progress will be lost.");
@@ -166,10 +165,10 @@ try {
 
         });
 
-        exitBtn.setOnAction(e -> {
-            playClickSound();
-
-        });
+//        exitBtn.setOnAction(e -> {
+//            playClickSound();
+//
+//        });
 
 
 

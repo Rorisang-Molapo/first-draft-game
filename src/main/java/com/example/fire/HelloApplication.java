@@ -35,7 +35,7 @@ public class HelloApplication extends Application {
             Media media = new Media(musicPath);
             bgMusicPlayer = new MediaPlayer(media);
             bgMusicPlayer.setCycleCount(MediaPlayer.INDEFINITE);
-            bgMusicPlayer.setVolume(0.3);
+            bgMusicPlayer.setVolume(0.8);
             bgMusicPlayer.play();
         } catch (Exception e) {
             System.err.println("Failed to load background music: " + e.getMessage());
@@ -152,7 +152,11 @@ public class HelloApplication extends Application {
         settingsBtn.setPrefWidth(200);
         exitBtn.setPrefWidth(200);
 
-        playBtn.setOnAction(e -> playClickSound());
+        playBtn.setOnAction(e -> {
+            playClickSound();
+            GameScreen gameView = new GameScreen(stage, this);
+            stage.setScene(gameView.getScene());
+        });
 
         settingsBtn.setOnAction(e -> {
             playClickSound();
@@ -184,6 +188,7 @@ public class HelloApplication extends Application {
     public boolean isMuted() {
         return isMuted;
     }
+
 
     public void setMuted(boolean muted) {
         this.isMuted = muted;

@@ -65,7 +65,7 @@ public class settings {
         });
 
         // Volume Slider
-        Slider volumeSlider = new Slider(0, 1, bgMusic != null ? bgMusic.getVolume() : 0.3);
+        Slider volumeSlider = new Slider(0, 1, bgMusic != null ? bgMusic.getVolume() : 0.8);
         volumeSlider.setLayoutX(350);
         volumeSlider.setLayoutY(330);
         volumeSlider.setPrefWidth(200);

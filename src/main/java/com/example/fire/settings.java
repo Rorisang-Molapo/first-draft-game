@@ -88,6 +88,13 @@ public class settings {
         backBtn.setLayoutY(450);
         backBtn.setPrefWidth(200);
         backBtn.setFont(Font.font(customFont.getFamily(), 12));
+        String defaultStyle =
+                "-fx-background-color: rgba(255, 255, 255, 0.9); " +
+                        "-fx-text-fill: black; " +
+                        "-fx-background-radius: 8px; " +
+                        "-fx-padding: 8px 16px;";
+
+        backBtn.setStyle(defaultStyle);
 
         DropShadow buttonGlow = new DropShadow();
         buttonGlow.setColor(Color.web("#FF4500"));

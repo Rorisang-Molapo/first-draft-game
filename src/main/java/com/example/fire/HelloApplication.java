@@ -164,7 +164,11 @@ public class HelloApplication extends Application {
             stage.setScene(settingsView.getScene());
         });
 
-        instructionsBtn.setOnAction(e -> playClickSound());
+        instructionsBtn.setOnAction(e -> {
+            playClickSound();
+            instructions instructionsView = new instructions(stage, this);
+            stage.setScene(instructionsView.getScene());
+        });
 
         Pane pan = new Pane(backgroundImage, titleLabel, playBtn, instructionsBtn, settingsBtn, exitBtn);
         pan.setStyle("-fx-background-color:black");

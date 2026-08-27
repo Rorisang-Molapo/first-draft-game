@@ -152,11 +152,11 @@ public class HelloApplication extends Application {
         settingsBtn.setPrefWidth(200);
         exitBtn.setPrefWidth(200);
 
-        playBtn.setOnAction(e -> {
-            playClickSound();
-            GameScreen gameView = new GameScreen(stage, this);
-            stage.setScene(gameView.getScene());
-        });
+//        playBtn.setOnAction(e -> {
+//            playClickSound();
+//            GameScreen gameView = new GameScreen(stage, this);
+//            stage.setScene(gameView.getScene());
+//        });
 
         settingsBtn.setOnAction(e -> {
             playClickSound();

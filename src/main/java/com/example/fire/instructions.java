@@ -31,6 +31,22 @@ import javafx.stage.Stage;
             label.setLayoutY(80);
             label.setStyle("-fx-text-fill: #FF4500;");
 
+            Label headingLabel = new Label("Game Objective");
+            headingLabel.setStyle("-fx-text-fill: #FF4500; -fx-font-size: 18px; -fx-font-weight: bold;");
+            headingLabel.setLayoutX(150);
+            headingLabel.setLayoutY(180);
+
+            Label headingLabel2 = new Label("Controls");
+            headingLabel2.setStyle("-fx-text-fill: #FF4500; -fx-font-size: 18px; -fx-font-weight: bold;");
+            headingLabel2.setLayoutX(150);
+            headingLabel2.setLayoutY(200);
+
+            Label headingLabel3 = new Label("Controls");
+            headingLabel3.setStyle("-fx-text-fill: #FF4500; -fx-font-size: 18px; -fx-font-weight: bold;");
+            headingLabel3.setLayoutX(150);
+            headingLabel3.setLayoutY(220);
+
+
 
 
             Button backBtn = new Button("Back to Main");
@@ -62,7 +78,7 @@ import javafx.stage.Stage;
 
             Pane pane = new Pane();
             pane.setStyle("-fx-background-color:black");
-            pane.getChildren().addAll(label, backBtn);
+            pane.getChildren().addAll(label, backBtn,headingLabel,headingLabel2,headingLabel3);
 
             return new Scene(pane, 900, 700);
         }

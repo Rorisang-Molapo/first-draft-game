@@ -24,70 +24,68 @@ public class instructions {
         this.mainApp = mainApp;
     }
 
-    public Scene getScene(){
+    public Scene getScene() {
 
+        // Title
         Label titleLabel = new Label("Instructions");
         titleLabel.setFont(Font.font(customFont.getFamily(), 90));
         titleLabel.setLayoutX(180);
         titleLabel.setLayoutY(50);
         titleLabel.setStyle("-fx-text-fill: #FF4500;");
 
-
         // Game Objective
-        Label heading1 = new Label("Game Objective");
+        Label heading1 = new Label("Objective");
         heading1.setStyle("-fx-text-fill: #FF4500; -fx-font-size: 20px; -fx-font-weight: bold;");
         heading1.setLayoutX(150);
-        heading1.setLayoutY(160);
+        heading1.setLayoutY(180);
 
-        Label desc1 = new Label("Eliminate all enemies and be the last one standing!");
+        Label desc1 = new Label("Destroy all red targets before they shrink and vanish!");
         desc1.setStyle("-fx-text-fill: white; -fx-font-size: 16px;");
         desc1.setLayoutX(150);
-        desc1.setLayoutY(190);
+        desc1.setLayoutY(210);
 
         // Controls
         Label heading2 = new Label("Controls");
         heading2.setStyle("-fx-text-fill: #FF4500; -fx-font-size: 20px; -fx-font-weight: bold;");
         heading2.setLayoutX(150);
-        heading2.setLayoutY(240);
+        heading2.setLayoutY(260);
 
-        Label desc2 = new Label("WASD / Arrow Keys to move  |  Mouse to aim  |  SPACE to shoot");
+        Label desc2 = new Label("Use your Mouse Left-Click to click on appearing targets.");
         desc2.setStyle("-fx-text-fill: white; -fx-font-size: 16px;");
         desc2.setLayoutX(150);
-        desc2.setLayoutY(270);
+        desc2.setLayoutY(290);
 
-
+        // Rules
         Label heading3 = new Label("Rules");
         heading3.setStyle("-fx-text-fill: #FF4500; -fx-font-size: 20px; -fx-font-weight: bold;");
         heading3.setLayoutX(150);
-        heading3.setLayoutY(320);
+        heading3.setLayoutY(340);
 
-        Label desc3 = new Label("• 200 HP – enemies deal 25 damage on contact");
+        Label desc3 = new Label("• You start with 200 HP – missing a target costs 25 HP");
         desc3.setStyle("-fx-text-fill: white; -fx-font-size: 16px;");
         desc3.setLayoutX(150);
-        desc3.setLayoutY(350);
+        desc3.setLayoutY(370);
 
-        Label desc3b = new Label("• Collect green medkits to restore 40 HP");
-        desc3b.setStyle("-fx-text-fill: white; -fx-font-size: 16px;");
+        Label desc3b = new Label("• Clear all 25 targets to claim victory!");
+        desc3b.setStyle("-fx-text-fill: #FFD700; -fx-font-size: 16px; -fx-font-weight: bold;");
         desc3b.setLayoutX(150);
-        desc3b.setLayoutY(375);
+        desc3b.setLayoutY(400);
 
-        Label desc3c = new Label("• Kill all 25 enemies to claim victory!");
-        desc3c.setStyle("-fx-text-fill: #FFD700; -fx-font-size: 16px; -fx-font-weight: bold;");
-        desc3c.setLayoutX(150);
-        desc3c.setLayoutY(400);
-
-
+        // Back Button
         Button backBtn = new Button("Back to Main");
         backBtn.setLayoutX(350);
-        backBtn.setLayoutY(480);
+        backBtn.setLayoutY(500);
         backBtn.setPrefWidth(200);
         backBtn.setFont(Font.font(customFont.getFamily(), 12));
+
         String defaultStyle =
                 "-fx-background-color: rgba(255, 255, 255, 0.9); " +
                         "-fx-text-fill: black; " +
                         "-fx-background-radius: 8px; " +
-                        "-fx-padding: 8px 16px;";
+                        "-fx-padding: 8px 16px; " +
+                        "-fx-cursor: hand;";
         backBtn.setStyle(defaultStyle);
+
         DropShadow buttonGlow = new DropShadow();
         buttonGlow.setColor(Color.web("#FF4500"));
         buttonGlow.setRadius(15);
@@ -109,7 +107,7 @@ public class instructions {
                 titleLabel,
                 heading1, desc1,
                 heading2, desc2,
-                heading3, desc3, desc3b, desc3c,
+                heading3, desc3, desc3b,
                 backBtn
         );
 

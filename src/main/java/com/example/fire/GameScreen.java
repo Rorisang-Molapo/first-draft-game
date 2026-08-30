@@ -24,24 +24,46 @@ public class GameScreen {
 
     public Scene getScene(){
 
-        Label scoreLabel = new Label("Score: 0");
-        scoreLabel.setStyle("-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;");
-        scoreLabel.setLayoutX(20);
-        scoreLabel.setLayoutY(20);
-
-        Button playBtn = new Button("Give-UP");
-        playBtn.setLayoutX(800);
-        playBtn.setLayoutY(20);
-        playBtn.setFont(Font.font(customFont.getFamily(), 12));
         String defaultStyle =
                 "-fx-background-color: rgba(255, 255, 255, 0.9); " +
                         "-fx-text-fill: black; " +
                         "-fx-background-radius: 8px; " +
                         "-fx-padding: 8px 16px; " +
                         "-fx-cursor: hand;";
-        playBtn.setStyle(defaultStyle);
 
-        playBtn.setOnAction(e -> {
+
+        Label scoreLabel = new Label("Score: ");
+        scoreLabel.setStyle("-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;");
+        scoreLabel.setLayoutX(30);
+        scoreLabel.setLayoutY(20);
+
+
+        Label healthLabel = new Label("Health: 200HP");
+        healthLabel.setStyle("-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;");
+        healthLabel.setLayoutX(180);
+        healthLabel.setLayoutY(20);
+
+
+        Label targetsLabel = new Label("Targets: 25");
+        targetsLabel.setStyle("-fx-text-fill: white; -fx-font-size: 16px; -fx-font-weight: bold;");
+        targetsLabel.setLayoutX(400);
+        targetsLabel.setLayoutY(20);
+
+
+        Button pauseBtn = new Button("Pause");
+        pauseBtn.setLayoutX(660);
+        pauseBtn.setLayoutY(15);
+        pauseBtn.setFont(Font.font(customFont.getFamily(), 12));
+        pauseBtn.setStyle(defaultStyle);
+
+
+        Button lazy = new Button("Give-UP");
+        lazy.setLayoutX(770);
+        lazy.setLayoutY(15);
+        lazy.setFont(Font.font(customFont.getFamily(), 12));
+        lazy.setStyle(defaultStyle);
+
+        lazy.setOnAction(e -> {
             mainApp.playClickSound();
             try {
                 mainApp.start(stage);
@@ -52,7 +74,7 @@ public class GameScreen {
 
         Pane pane = new Pane();
         pane.setStyle("-fx-background-color: Black");
-        pane.getChildren().addAll(playBtn, scoreLabel);
+        pane.getChildren().addAll(scoreLabel, healthLabel, targetsLabel, pauseBtn, lazy);
 
         return new Scene(pane, 900, 700);
     }

@@ -114,7 +114,7 @@ public class instructions {
         backBtn.layoutYProperty().bind(pan.heightProperty().multiply(500.0 / 700.0));
         backBtn.prefWidthProperty().bind(pan.widthProperty().multiply(200.0 / 900.0));
 
-        // Dynamic Font and Component Scaling Listener
+
         pan.widthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldVal, Number newVal) {
@@ -122,7 +122,7 @@ public class instructions {
 
                 // Scale Main Custom Fonts
                 titleLabel.setFont(Font.font(customFont.getFamily(), 90 * scaleFactor));
-                backBtn.setFont(Font.font(customFont.getFamily(), 20 * scaleFactor)); // Updated to match your Main Menu size ratio
+                backBtn.setFont(Font.font(customFont.getFamily(), 20 * scaleFactor));
 
                 // Scale Headings (Original size: 20px)
                 Font scaledHeadingFont = Font.font("System", 20 * scaleFactor);

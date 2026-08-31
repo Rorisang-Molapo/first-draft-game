@@ -1,6 +1,9 @@
 package com.example.fire;
 
 import javafx.application.Application;
+import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -29,6 +32,9 @@ public class HelloApplication extends Application {
     // so this method runs once when application starts.
     @Override
     public void init() {
+
+        Pane pane = new Pane();
+
         // Background Music
         try {
             String musicPath = getClass().getResource("/audio/KORDHELL - MURDER IN MY MIND.mp3").toExternalForm();
@@ -65,9 +71,8 @@ public class HelloApplication extends Application {
         try {
             Image img = new Image(getClass().getResource("/images/free.jpg").toExternalForm());
             backgroundImage.setImage(img);
-            backgroundImage.setFitWidth(900);
-            backgroundImage.setFitHeight(700);
-            backgroundImage.setPreserveRatio(false);
+//            backgroundImage.setFitWidth(900);
+//            backgroundImage.setFitHeight(700);
 
             Glow glow = new Glow(0.4);
             backgroundImage.setEffect(glow);
@@ -80,8 +85,8 @@ public class HelloApplication extends Application {
         titleLabel.setFont(Font.font(customFont.getFamily(), 70));
         titleLabel.setStyle("-fx-text-fill: #FF4500;");
         titleLabel.setEffect(new DropShadow(20, Color.BLACK));
-        titleLabel.setLayoutX(320);
-        titleLabel.setLayoutY(130);
+//        titleLabel.setLayoutX(320);
+//        titleLabel.setLayoutY(130);
 
         // Button logic
         Button playBtn = new Button("Play Game");
@@ -130,17 +135,17 @@ public class HelloApplication extends Application {
         instructionsBtn.setOnMouseEntered(e -> instructionsBtn.setStyle(hoverStyle));
         instructionsBtn.setOnMouseExited(e -> instructionsBtn.setStyle(defaultStyle));
 
-        playBtn.setLayoutX(360);
-        playBtn.setLayoutY(440);
-
-        instructionsBtn.setLayoutX(360);
-        instructionsBtn.setLayoutY(490);
-
-        settingsBtn.setLayoutX(360);
-        settingsBtn.setLayoutY(540);
-
-        exitBtn.setLayoutX(360);
-        exitBtn.setLayoutY(590);
+//        playBtn.setLayoutX(360);
+//        playBtn.setLayoutY(440);
+//
+//        instructionsBtn.setLayoutX(360);
+//        instructionsBtn.setLayoutY(490);
+//
+//        settingsBtn.setLayoutX(360);
+//        settingsBtn.setLayoutY(540);
+//
+//        exitBtn.setLayoutX(360);
+//        exitBtn.setLayoutY(590);
 
         playBtn.setFont(customFont);
         instructionsBtn.setFont(customFont);
@@ -172,13 +177,63 @@ public class HelloApplication extends Application {
 
         Pane pan = new Pane(backgroundImage, titleLabel, playBtn, instructionsBtn, settingsBtn, exitBtn);
         pan.setStyle("-fx-background-color:black");
+
+        backgroundImage.fitWidthProperty().bind(pan.widthProperty());
+        backgroundImage.fitHeightProperty().bind(pan.heightProperty());
+
+        titleLabel.layoutXProperty().bind(pan.widthProperty().multiply(320.0 / 900.0));
+        titleLabel.layoutYProperty().bind(pan.heightProperty().multiply(130.0 / 700.0));
+
+
+
+        titleLabel.layoutXProperty().bind(pan.widthProperty().multiply(320.0 / 900.0));
+        titleLabel.layoutYProperty().bind(pan.heightProperty().multiply(130.0 / 700.0));
+
+
+        playBtn.prefWidthProperty().bind(pan.widthProperty().multiply(200.0 / 900.0));
+        playBtn.layoutXProperty().bind(pan.widthProperty().multiply(360.0 / 900.0));
+
+        instructionsBtn.prefWidthProperty().bind(pan.widthProperty().multiply(200.0 / 900.0));
+        instructionsBtn.layoutXProperty().bind(pan.widthProperty().multiply(360.0 / 900.0));
+
+        settingsBtn.prefWidthProperty().bind(pan.widthProperty().multiply(200.0 / 900.0));
+        settingsBtn.layoutXProperty().bind(pan.widthProperty().multiply(360.0 / 900.0));
+
+        exitBtn.prefWidthProperty().bind(pan.widthProperty().multiply(200.0 / 900.0));
+        exitBtn.layoutXProperty().bind(pan.widthProperty().multiply(360.0 / 900.0));
+
+
+        playBtn.layoutYProperty().bind(pan.heightProperty().multiply(440.0 / 700.0));
+        instructionsBtn.layoutYProperty().bind(pan.heightProperty().multiply(490.0 / 700.0));
+        settingsBtn.layoutYProperty().bind(pan.heightProperty().multiply(540.0 / 700.0));
+        exitBtn.layoutYProperty().bind(pan.heightProperty().multiply(590.0 / 700.0));
+
+
+        pan.widthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldVal, Number newVal) {
+                double scaleFactor = newVal.doubleValue() / 900.0;
+
+                // Scale fonts dynamically
+                titleLabel.setFont(Font.font(customFont.getFamily(), 70 * scaleFactor));
+
+                Font scaledBtnFont = Font.font(customFont.getFamily(), 20 * scaleFactor);
+                playBtn.setFont(scaledBtnFont);
+                instructionsBtn.setFont(scaledBtnFont);
+                settingsBtn.setFont(scaledBtnFont);
+                exitBtn.setFont(scaledBtnFont);
+
+                System.out.println("widthProperty changed from " + oldVal.doubleValue() + " to " + newVal.doubleValue());
+            }
+        });
+
         Scene scene = new Scene(pan, 900, 700);
         stage.setTitle("Welcome");
         stage.setScene(scene);
         stage.show();
     }
 
-    // Helper methods
+
     public void playClickSound() {
         if (clickSound != null) {
             clickSound.play();

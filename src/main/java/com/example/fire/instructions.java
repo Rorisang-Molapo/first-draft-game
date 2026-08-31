@@ -1,5 +1,7 @@
 package com.example.fire;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -28,55 +30,34 @@ public class instructions {
 
         // Title
         Label titleLabel = new Label("Instructions");
-        titleLabel.setFont(Font.font(customFont.getFamily(), 90));
-        titleLabel.setLayoutX(180);
-        titleLabel.setLayoutY(50);
         titleLabel.setStyle("-fx-text-fill: #FF4500;");
 
         // Game Objective
         Label heading1 = new Label("Objective");
-        heading1.setStyle("-fx-text-fill: #FF4500; -fx-font-size: 20px; -fx-font-weight: bold;");
-        heading1.setLayoutX(150);
-        heading1.setLayoutY(180);
+        heading1.setStyle("-fx-text-fill: #FF4500; -fx-font-weight: bold;");
 
         Label desc1 = new Label("Destroy all red targets before they shrink and vanish!");
-        desc1.setStyle("-fx-text-fill: white; -fx-font-size: 16px;");
-        desc1.setLayoutX(150);
-        desc1.setLayoutY(210);
+        desc1.setStyle("-fx-text-fill: white;");
 
         // Controls
         Label heading2 = new Label("Controls");
-        heading2.setStyle("-fx-text-fill: #FF4500; -fx-font-size: 20px; -fx-font-weight: bold;");
-        heading2.setLayoutX(150);
-        heading2.setLayoutY(260);
+        heading2.setStyle("-fx-text-fill: #FF4500; -fx-font-weight: bold;");
 
         Label desc2 = new Label("Use your Mouse Left-Click to click on appearing targets.");
-        desc2.setStyle("-fx-text-fill: white; -fx-font-size: 16px;");
-        desc2.setLayoutX(150);
-        desc2.setLayoutY(290);
+        desc2.setStyle("-fx-text-fill: white;");
 
         // Rules
         Label heading3 = new Label("Rules");
-        heading3.setStyle("-fx-text-fill: #FF4500; -fx-font-size: 20px; -fx-font-weight: bold;");
-        heading3.setLayoutX(150);
-        heading3.setLayoutY(340);
+        heading3.setStyle("-fx-text-fill: #FF4500; -fx-font-weight: bold;");
 
         Label desc3 = new Label("• You start with 200 HP – missing a target costs 25 HP");
-        desc3.setStyle("-fx-text-fill: white; -fx-font-size: 16px;");
-        desc3.setLayoutX(150);
-        desc3.setLayoutY(370);
+        desc3.setStyle("-fx-text-fill: white;");
 
         Label desc3b = new Label("• Clear all 25 targets to claim victory!");
-        desc3b.setStyle("-fx-text-fill: #FFD700; -fx-font-size: 16px; -fx-font-weight: bold;");
-        desc3b.setLayoutX(150);
-        desc3b.setLayoutY(400);
+        desc3b.setStyle("-fx-text-fill: #FFD700; -fx-font-weight: bold;");
 
         // Back Button
         Button backBtn = new Button("Back to Main");
-        backBtn.setLayoutX(350);
-        backBtn.setLayoutY(500);
-        backBtn.setPrefWidth(200);
-        backBtn.setFont(Font.font(customFont.getFamily(), 12));
 
         String defaultStyle =
                 "-fx-background-color: rgba(255, 255, 255, 0.9); " +
@@ -101,9 +82,67 @@ public class instructions {
             }
         });
 
-        Pane pane = new Pane();
-        pane.setStyle("-fx-background-color: black");
-        pane.getChildren().addAll(
+        Pane pan = new Pane();
+
+        // Responsive Ratios
+
+        titleLabel.layoutXProperty().bind(pan.widthProperty().multiply(180.0 / 900.0));
+        titleLabel.layoutYProperty().bind(pan.heightProperty().multiply(50.0 / 700.0));
+
+
+        heading1.layoutXProperty().bind(pan.widthProperty().multiply(150.0 / 900.0));
+        heading1.layoutYProperty().bind(pan.heightProperty().multiply(180.0 / 700.0));
+        desc1.layoutXProperty().bind(pan.widthProperty().multiply(150.0 / 900.0));
+        desc1.layoutYProperty().bind(pan.heightProperty().multiply(210.0 / 700.0));
+
+
+        heading2.layoutXProperty().bind(pan.widthProperty().multiply(150.0 / 900.0));
+        heading2.layoutYProperty().bind(pan.heightProperty().multiply(260.0 / 700.0));
+        desc2.layoutXProperty().bind(pan.widthProperty().multiply(150.0 / 900.0));
+        desc2.layoutYProperty().bind(pan.heightProperty().multiply(290.0 / 700.0));
+
+
+        heading3.layoutXProperty().bind(pan.widthProperty().multiply(150.0 / 900.0));
+        heading3.layoutYProperty().bind(pan.heightProperty().multiply(340.0 / 700.0));
+        desc3.layoutXProperty().bind(pan.widthProperty().multiply(150.0 / 900.0));
+        desc3.layoutYProperty().bind(pan.heightProperty().multiply(370.0 / 700.0));
+        desc3b.layoutXProperty().bind(pan.widthProperty().multiply(150.0 / 900.0));
+        desc3b.layoutYProperty().bind(pan.heightProperty().multiply(400.0 / 700.0));
+
+
+        backBtn.layoutXProperty().bind(pan.widthProperty().multiply(350.0 / 900.0));
+        backBtn.layoutYProperty().bind(pan.heightProperty().multiply(500.0 / 700.0));
+        backBtn.prefWidthProperty().bind(pan.widthProperty().multiply(200.0 / 900.0));
+
+        // Dynamic Font and Component Scaling Listener
+        pan.widthProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observableValue, Number oldVal, Number newVal) {
+                double scaleFactor = newVal.doubleValue() / 900.0;
+
+                // Scale Main Custom Fonts
+                titleLabel.setFont(Font.font(customFont.getFamily(), 90 * scaleFactor));
+                backBtn.setFont(Font.font(customFont.getFamily(), 20 * scaleFactor)); // Updated to match your Main Menu size ratio
+
+                // Scale Headings (Original size: 20px)
+                Font scaledHeadingFont = Font.font("System", 20 * scaleFactor);
+                heading1.setFont(scaledHeadingFont);
+                heading2.setFont(scaledHeadingFont);
+                heading3.setFont(scaledHeadingFont);
+
+                // Scale Descriptions (Original size: 16px)
+                Font scaledDescFont = Font.font("System", 16 * scaleFactor);
+                desc1.setFont(scaledDescFont);
+                desc2.setFont(scaledDescFont);
+                desc3.setFont(scaledDescFont);
+                desc3b.setFont(scaledDescFont);
+
+                System.out.println("widthProperty changed from " + oldVal.doubleValue() + " to " + newVal.doubleValue());
+            }
+        });
+
+        pan.setStyle("-fx-background-color: black");
+        pan.getChildren().addAll(
                 titleLabel,
                 heading1, desc1,
                 heading2, desc2,
@@ -111,6 +150,6 @@ public class instructions {
                 backBtn
         );
 
-        return new Scene(pane, 900, 700);
+        return new Scene(pan, 900, 700);
     }
 }
